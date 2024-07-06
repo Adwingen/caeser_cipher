@@ -1,0 +1,53 @@
+alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 
+  'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+
+def caesar(start_text, shift_amount, cipher_direction):
+  end_text = ""
+  if cipher_direction == "decode":
+    shift_amount *= -1
+  for char in start_text:
+    if char in alphabet:
+      position = alphabet.index(char)
+      new_position = position + shift_amount
+      end_text += alphabet[new_position]
+    else:
+      end_text += char
+  print(f"Here's the {cipher_direction}d result: {end_text}")
+
+from art import logo
+print(logo)
+
+def get_valid_shift():
+  while True:
+    shift = input("Type the shift number:\n")
+    if shift.isdigit():
+      return int(shift) % 26
+    else:
+      print("Invalid input. Please enter a valid integer.")
+
+def get_valid_direction():
+  while True:
+    direction = input("Type 'encode' to encrypt, type 'decode' to decrypt:\n").lower()
+    if direction in ['encode', 'decode']:
+      return direction
+    else:
+      print("Invalid direction. Please enter 'encode' or 'decode'.")
+
+def get_valid_continue_response():
+  while True:
+    response = input("Type 'yes' if you want to go again. Otherwise type 'no'.\n").lower()
+    if response in ['yes', 'no']:
+      return response
+    else:
+      print("Invalid input. Please enter 'yes' or 'no'.")
+
+should_continue = True
+while should_continue:
+  direction = get_valid_direction()
+  text = input("Type your message:\n").lower()
+  shift = get_valid_shift()
+  caesar(start_text=text, shift_amount=shift, cipher_direction=direction)
+  result = get_valid_continue_response()
+  if result == "no":
+    should_continue = False
+    print("Goodbye")
